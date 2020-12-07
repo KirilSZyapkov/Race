@@ -1,0 +1,28 @@
+function race(input) {
+    let patternName = /[A-Za-z]/g;
+    let patternNumbers = /\d/g;
+    let listOfParticipants = input.shift().split(`, `);
+    let raceList = {};
+    let line;
+    while ((line = input.shift()) !== "end of race") {
+        let matchName = line.match(patternName).join(``);
+        let matchNumber = line.match(patternNumbers).map(Number).reduce((a, b) => a + b, 0);
+        if (listOfParticipants.includes(matchName)) {
+            if (!raceList.hasOwnProperty(matchName)) {
+                raceList[matchName] = matchNumber;
+            } else {
+                raceList[matchName] += matchNumber;
+            }
+
+        }
+    }
+    let sorted = Object.entries(raceList);
+    sorted.sort((a, b) => b[1] - a[1]);
+    sorted.length = 3;
+    let firstPlace = sorted[0];
+    console.log(`1st place: ${firstPlace[0]}`);
+    let secondPlace = sorted[1];
+    console.log(`2nd place: ${secondPlace[0]}`);
+    let thirdPlace = sorted[2];
+    console.log(`3rd place: ${thirdPlace[0]}`);
+}
